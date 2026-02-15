@@ -1,0 +1,40 @@
+.root {
+    -fx-font-family: 'System';
+    -fx-font-size: 12px;
+}
+
+.button {
+    -fx-background-radius: 5;
+    -fx-padding: 8 15 8 15;
+}
+
+.button:hover {
+    -fx-cursor: hand;
+}
+
+.text-field, .password-field, .combo-box {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1;
+}
+
+.text-field:focused, .password-field:focused, .combo-box:focused {
+    -fx-border-color: #3498db;
+}
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5;
+}
+
+.table-view .column-header {
+    -fx-background-color: #ecf0f1;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #3498db;
+    -fx-text-background-color: white;
+}
