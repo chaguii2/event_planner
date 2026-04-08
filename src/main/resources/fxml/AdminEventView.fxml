@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane xmlns:fx="http://javafx.com/fxml"
+         fx:controller="org.example.controller.AdminEventController"
+         tabClosingPolicy="UNAVAILABLE"
+         prefHeight="600" prefWidth="800">
+
+    <Tab text="Utilisateurs">
+        <BorderPane>
+            <top>
+                <VBox style="-fx-background-color: #3498db;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <padding>
+                            <Insets top="15" right="20" bottom="15" left="20"/>
+                        </padding>
+                        <Label text="📅 Event Planner - Administrateur"
+                               style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="welcomeLabel" style="-fx-text-fill: white;"/>
+                        <Button text="Déconnexion" onAction="#handleLogout"
+                                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white;"/>
+                    </HBox>
+                </VBox>
+            </top>
+
+            <center>
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Liste des Utilisateurs" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Filtrer par rôle:"/>
+                        <ComboBox fx:id="filterComboBox" prefWidth="150"/>
+                        <Button text="Appliquer" onAction="#handleFilter"/>
+                    </HBox>
+
+                    <TableView fx:id="userTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="userIdColumn" text="ID" prefWidth="40"/>
+                            <TableColumn fx:id="userNameColumn" text="Nom" prefWidth="120"/>
+                            <TableColumn fx:id="userEmailColumn" text="Email" prefWidth="200"/>
+                            <TableColumn fx:id="userPhoneColumn" text="Téléphone" prefWidth="120"/>
+                            <TableColumn fx:id="userRoleColumn" text="Rôle" prefWidth="80"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </center>
+        </BorderPane>
+    </Tab>
+
+    <Tab text="Événements">
+        <BorderPane>
+            <center>
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Tous les Événements" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+                    <TableView fx:id="eventsTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="eventIdColumn" text="ID" prefWidth="40"/>
+                            <TableColumn fx:id="eventTitreColumn" text="Titre" prefWidth="150"/>
+                            <TableColumn fx:id="eventDescriptionColumn" text="Description" prefWidth="150"/>
+                            <TableColumn fx:id="eventDateDebutColumn" text="Début" prefWidth="100"/>
+                            <TableColumn fx:id="eventDateFinColumn" text="Fin" prefWidth="100"/>
+                            <TableColumn fx:id="eventLieuColumn" text="Lieu" prefWidth="100"/>
+                            <TableColumn fx:id="eventPlacesColumn" text="Places" prefWidth="60"/>
+                            <TableColumn fx:id="eventOrganisateurColumn" text="Organisateur" prefWidth="120"/>
+                            <TableColumn fx:id="eventStatutColumn" text="Statut" prefWidth="80"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </center>
+        </BorderPane>
+    </Tab>
+
+    <Tab text="Détails Organisateur">
+        <BorderPane>
+            <center>
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Sélectionner un organisateur" style="-fx-font-size: 14;"/>
+
+                    <ComboBox fx:id="organisateurComboBox" prefWidth="300" promptText="Choisir un organisateur"/>
+
+                    <Button text="Voir ses événements" onAction="#handleShowOrganisateurEvents"
+                            style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+
+                    <TableView fx:id="organisateurEventsTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="orgEventIdColumn" text="ID" prefWidth="40"/>
+                            <TableColumn fx:id="orgEventTitreColumn" text="Titre" prefWidth="150"/>
+                            <TableColumn fx:id="orgEventLieuColumn" text="Lieu" prefWidth="100"/>
+                            <TableColumn fx:id="orgEventParticipantsColumn" text="Participants" prefWidth="80"/>
+                            <TableColumn fx:id="orgEventStatutColumn" text="Statut" prefWidth="80"/>
+                        </columns>
+                    </TableView>
+
+                    <Button text="Voir les participants" onAction="#handleShowParticipants"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                </VBox>
+            </center>
+        </BorderPane>
+    </Tab>
+
+    <Tab text="Détails Participant">
+        <BorderPane>
+            <center>
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Sélectionner un participant" style="-fx-font-size: 14;"/>
+
+                    <ComboBox fx:id="participantComboBox" prefWidth="300" promptText="Choisir un participant"/>
+
+                    <Button text="Voir ses participations" onAction="#handleShowParticipantEvents"
+                            style="-fx-background-color: #e67e22; -fx-text-fill: white;"/>
+
+                    <TableView fx:id="participantEventsTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="partEventIdColumn" text="ID" prefWidth="40"/>
+                            <TableColumn fx:id="partEventTitreColumn" text="Titre" prefWidth="200"/>
+                            <TableColumn fx:id="partEventDateColumn" text="Date" prefWidth="120"/>
+                            <TableColumn fx:id="partEventLieuColumn" text="Lieu" prefWidth="120"/>
+                            <TableColumn fx:id="partEventOrganisateurColumn" text="Organisateur" prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </center>
+        </BorderPane>
+    </Tab>
+</TabPane>

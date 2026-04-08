@@ -1,8 +1,6 @@
 package org.example.session;
 
-import org.example.model.Admin;
-import org.example.model.Role;
-import org.example.model.User;
+import org.example.model.*;
 
 public class Session {
     private static User currentUser;
@@ -25,6 +23,14 @@ public class Session {
 
     public static boolean isAdmin() {
         return currentUser instanceof Admin;
+    }
+
+    public static boolean isOrganizer() {
+        return currentUser instanceof Organizer;
+    }
+
+    public static boolean isParticipant() {
+        return currentUser instanceof Participant;
     }
 
     public static Role getRole() {

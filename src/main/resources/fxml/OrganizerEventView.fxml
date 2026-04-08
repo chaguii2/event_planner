@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane xmlns:fx="http://javafx.com/fxml"
+         fx:controller="org.example.controller.OrganizerEventController"
+         tabClosingPolicy="UNAVAILABLE"
+         prefHeight="600" prefWidth="800">
+
+    <Tab text="Mes Événements">
+        <BorderPane>
+            <top>
+                <VBox style="-fx-background-color: #27ae60;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <padding>
+                            <Insets top="15" right="20" bottom="15" left="20"/>
+                        </padding>
+                        <Label text="📅 Event Planner - Organisateur"
+                               style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="welcomeLabel" style="-fx-text-fill: white;"/>
+                        <Button text="Déconnexion" onAction="#handleLogout"
+                                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white;"/>
+                    </HBox>
+                </VBox>
+            </top>
+
+            <center>
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Mes Événements" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+                    <TableView fx:id="eventsTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="idColumn" text="ID" prefWidth="40"/>
+                            <TableColumn fx:id="titreColumn" text="Titre" prefWidth="150"/>
+                            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="200"/>
+                            <TableColumn fx:id="dateDebutColumn" text="Début" prefWidth="120"/>
+                            <TableColumn fx:id="dateFinColumn" text="Fin" prefWidth="120"/>
+                            <TableColumn fx:id="lieuColumn" text="Lieu" prefWidth="120"/>
+                            <TableColumn fx:id="placesColumn" text="Places" prefWidth="80"/>
+                            <TableColumn fx:id="statutColumn" text="Statut" prefWidth="80"/>
+                        </columns>
+                    </TableView>
+
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Button text="Nouvel Événement" onAction="#handleNewEvent"
+                                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                        <Button text="Rafraîchir" onAction="#loadEvents"
+                                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                    </HBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </Tab>
+
+    <Tab text="Créer/Modifier Événement">
+        <BorderPane>
+            <center>
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Créer un Événement" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+                    <GridPane hgap="10" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="100"/>
+                            <ColumnConstraints minWidth="300" hgrow="ALWAYS"/>
+                        </columnConstraints>
+
+                        <Label text="Titre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="titreField" GridPane.rowIndex="0" GridPane.columnIndex="1" promptText="Titre de l'événement"/>
+
+                        <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextArea fx:id="descriptionField" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                  promptText="Description" prefRowCount="3"/>
+
+                        <Label text="Date début:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <DatePicker fx:id="dateDebutPicker" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="300"/>
+
+                        <Label text="Date fin:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <DatePicker fx:id="dateFinPicker" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="300"/>
+
+                        <Label text="Lieu:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <TextField fx:id="lieuField" GridPane.rowIndex="4" GridPane.columnIndex="1" promptText="Lieu"/>
+
+                        <Label text="Places maximum:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <Spinner fx:id="placesSpinner" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                                 initialValue="50" min="1" max="1000" editable="true" prefWidth="150"/>
+                    </GridPane>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button text="Créer" onAction="#handleCreateEvent"
+                                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;" prefWidth="100"/>
+                        <Button text="Mettre à jour" onAction="#handleUpdateEvent"
+                                style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold;" prefWidth="100"/>
+                        <Button text="Supprimer" onAction="#handleDeleteEvent"
+                                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;" prefWidth="100"/>
+                        <Button text="Annuler" onAction="#handleClear" prefWidth="100"/>
+                    </HBox>
+
+                    <Label fx:id="eventIdLabel" visible="false"/>
+                </VBox>
+            </center>
+        </BorderPane>
+    </Tab>
+</TabPane>

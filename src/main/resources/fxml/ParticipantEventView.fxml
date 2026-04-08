@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<TabPane xmlns:fx="http://javafx.com/fxml"
+         fx:controller="org.example.controller.ParticipantEventController"
+         tabClosingPolicy="UNAVAILABLE"
+         prefHeight="600" prefWidth="800">
+
+    <Tab text="Événements Disponibles">
+        <BorderPane>
+            <top>
+                <VBox style="-fx-background-color: #e67e22;">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <padding>
+                            <Insets top="15" right="20" bottom="15" left="20"/>
+                        </padding>
+                        <Label text="📅 Event Planner - Participant"
+                               style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="welcomeLabel" style="-fx-text-fill: white;"/>
+                        <Button text="Déconnexion" onAction="#handleLogout"
+                                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white;"/>
+                    </HBox>
+                </VBox>
+            </top>
+
+            <center>
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Événements Disponibles" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+                    <TableView fx:id="availableEventsTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="idColumn" text="ID" prefWidth="40"/>
+                            <TableColumn fx:id="titreColumn" text="Titre" prefWidth="150"/>
+                            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="200"/>
+                            <TableColumn fx:id="dateDebutColumn" text="Début" prefWidth="120"/>
+                            <TableColumn fx:id="lieuColumn" text="Lieu" prefWidth="120"/>
+                            <TableColumn fx:id="organisateurColumn" text="Organisateur" prefWidth="120"/>
+                            <TableColumn fx:id="placesColumn" text="Places dispo" prefWidth="80"/>
+                        </columns>
+                    </TableView>
+
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Button text="Participer" onAction="#handleParticiper"
+                                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                        <Button text="Rafraîchir" onAction="#loadAvailableEvents"
+                                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                    </HBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </Tab>
+
+    <Tab text="Mes Participations">
+        <BorderPane>
+            <center>
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Mes Inscriptions" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+                    <TableView fx:id="myEventsTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="myIdColumn" text="ID" prefWidth="40"/>
+                            <TableColumn fx:id="myTitreColumn" text="Titre" prefWidth="150"/>
+                            <TableColumn fx:id="myDescriptionColumn" text="Description" prefWidth="200"/>
+                            <TableColumn fx:id="myDateDebutColumn" text="Début" prefWidth="120"/>
+                            <TableColumn fx:id="myLieuColumn" text="Lieu" prefWidth="120"/>
+                            <TableColumn fx:id="myOrganisateurColumn" text="Organisateur" prefWidth="120"/>
+                            <TableColumn fx:id="myStatutColumn" text="Statut" prefWidth="80"/>
+                        </columns>
+                    </TableView>
+
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Button text="Annuler Participation" onAction="#handleAnnuler"
+                                style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+                        <Button text="Rafraîchir" onAction="#loadMyEvents"
+                                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+                    </HBox>
+                </VBox>
+            </center>
+        </BorderPane>
+    </Tab>
+</TabPane>

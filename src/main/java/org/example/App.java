@@ -17,7 +17,7 @@ public class App extends Application {
 
     public static void loadLoginScreen(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(App.class.getResource("/fxml/LoginView.fxml"));
-        stage.setTitle("Event Planner - Login");
+        stage.setTitle("Event Planner - Connexion");
         stage.setScene(new Scene(root, 400, 300));
         stage.setResizable(false);
         stage.show();
@@ -25,7 +25,7 @@ public class App extends Application {
 
     public static void loadRegisterScreen(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(App.class.getResource("/fxml/RegisterView.fxml"));
-        stage.setTitle("Event Planner - Register");
+        stage.setTitle("Event Planner - Inscription");
         stage.setScene(new Scene(root, 450, 400));
         stage.show();
     }
@@ -34,26 +34,24 @@ public class App extends Application {
         String fxmlFile;
         String title;
 
-        // Traditional switch statement
         switch (Session.getRole()) {
             case ADMIN:
-                fxmlFile = "/fxml/AdminView.fxml";
+                fxmlFile = "/fxml/AdminEventView.fxml";  // Utilise AdminEventController
                 title = "Event Planner - Admin Dashboard";
                 break;
             case ORGANIZER:
-                fxmlFile = "/fxml/OrganizerView.fxml";
-                title = "Event Planner - Organizer Dashboard";
+                fxmlFile = "/fxml/OrganizerEventView.fxml";  // Utilise OrganizerEventController
+                title = "Event Planner - Organisateur";
                 break;
             default:
-                fxmlFile = "/fxml/ParticipantView.fxml";
-                title = "Event Planner - Participant Dashboard";
+                fxmlFile = "/fxml/ParticipantEventView.fxml";  // Utilise ParticipantEventController
+                title = "Event Planner - Participant";
                 break;
         }
 
         Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
         stage.setTitle(title);
-        stage.setScene(new Scene(root, 800, 600));
-        stage.setResizable(true);
+        stage.setScene(new Scene(root, 900, 700));
         stage.show();
     }
 
