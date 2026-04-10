@@ -22,6 +22,8 @@
                                style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Label fx:id="welcomeLabel" style="-fx-text-fill: white;"/>
+                        <Button text="👤 Mon Profil" onAction="#handleProfile"
+                                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-radius: 5;"/>
                         <Button text="Déconnexion" onAction="#handleLogout"
                                 style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white;"/>
                     </HBox>

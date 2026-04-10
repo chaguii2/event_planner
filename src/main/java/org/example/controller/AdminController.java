@@ -3,7 +3,10 @@ package org.example.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -115,6 +118,27 @@ public class AdminController implements Initializable {
         emailField.setText(user.getEmail());
         phoneField.setText(user.getPhone());
         roleComboBox.setValue(user.getRole());
+    }
+    @FXML
+    private void handleProfile() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ProfileView.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Mon Profil");
+            stage.setScene(new Scene(root, 500, 450));
+            stage.setResizable(false);
+            stage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+            stage.initOwner(welcomeLabel.getScene().getWindow());
+            stage.showAndWait();
+
+            // Rafraîchir le nom après modification
+            welcomeLabel.setText("Bienvenue, " + Session.getCurrentUser().getName());
+
+        } catch (Exception e) {
+            AlertUtil.showError("Erreur", "Impossible d'ouvrir le profil: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML

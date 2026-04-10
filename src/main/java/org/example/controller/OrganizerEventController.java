@@ -3,7 +3,10 @@ package org.example.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -101,6 +104,13 @@ public class OrganizerEventController implements Initializable {
     /**
      * Configure les DatePickers avec des contraintes
      */
+    @FXML
+    private void refreshTable() {
+        eventsTable.refresh();
+        // Forcer la mise à jour des colonnes
+        eventsTable.getColumns().get(0).setVisible(false);
+        eventsTable.getColumns().get(0).setVisible(true);
+    }
     private void setupDatePickers() {
         // La date de début ne peut pas être dans le passé
         dateDebutPicker.setDayCellFactory(picker -> new DateCell() {
@@ -159,8 +169,20 @@ public class OrganizerEventController implements Initializable {
         try {
             eventList.setAll(eventService.getMyEvents());
             eventsTable.setItems(eventList);
+            eventsTable.refresh(); // ← Ajouter ceci
+
+            // 🔍 Debug
+            System.out.println("=== Mes événements ===");
+            for (Event e : eventList) {
+                System.out.println("ID: " + e.getId() +
+                        ", Titre: " + e.getTitre() +
+                        ", Statut: " + e.getStatut() +
+                        ", Places dispo: " + e.getPlacesDispo());
+            }
+
         } catch (Exception e) {
             AlertUtil.showError("Erreur", "Impossible de charger les événements: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -187,7 +209,27 @@ public class OrganizerEventController implements Initializable {
         clearFields();
         eventIdLabel.setText("");
     }
+    @FXML
+    private void handleProfile() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ProfileView.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Mon Profil");
+            stage.setScene(new Scene(root, 500, 450));
+            stage.setResizable(false);
+            stage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+            stage.initOwner(welcomeLabel.getScene().getWindow());
+            stage.showAndWait();
 
+            // Rafraîchir le nom après modification
+            welcomeLabel.setText("Bienvenue, " + Session.getCurrentUser().getName());
+
+        } catch (Exception e) {
+            AlertUtil.showError("Erreur", "Impossible d'ouvrir le profil: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void handleCreateEvent() {
         if (!validateFields()) return;
@@ -237,7 +279,6 @@ public class OrganizerEventController implements Initializable {
             LocalDate debut = dateDebutPicker.getValue();
             LocalDate fin = dateFinPicker.getValue();
 
-            // Vérification supplémentaire pour la modification
             if (debut.isBefore(LocalDate.now())) {
                 AlertUtil.showWarning("Attention", "Impossible de modifier un événement avec une date de début passée");
                 return;
@@ -248,14 +289,21 @@ public class OrganizerEventController implements Initializable {
 
             event.setLieu(lieuField.getText().trim());
             event.setPlacesMax(placesSpinner.getValue());
+            event.setPlacesDispo(placesSpinner.getValue()); // ⚠️ Important: remettre placesDispo = placesMax
             event.setIdOrganisateur(Session.getCurrentUser().getId());
 
             eventService.updateEvent(event);
+
+            // ✅ FORCER LE RAFRAÎCHISSEMENT
+            loadEvents();  // Recharger la liste
+            clearFields(); // Vider les champs
+            eventsTable.refresh(); // Forcer le rafraîchissement du tableau
+
             AlertUtil.showInfo("Succès", "Événement mis à jour avec succès!");
-            loadEvents();
 
         } catch (Exception e) {
             AlertUtil.showError("Erreur", "Impossible de mettre à jour l'événement: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

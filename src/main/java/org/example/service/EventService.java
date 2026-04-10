@@ -58,7 +58,9 @@ public class EventService {
 
     // Méthodes pour Participant
     public List<Event> getAvailableEvents() throws SQLException {
-        return eventDAO.findAvailableEvents();
+        List<Event> events = eventDAO.findAvailableEvents();
+        System.out.println("EventService.getAvailableEvents() retourne: " + events.size() + " événements");
+        return events;
     }
 
     public List<Event> getMyParticipations() throws SQLException {

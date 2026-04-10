@@ -53,6 +53,14 @@ public class UserService implements IUserService {
         dao.update(u);
     }
 
+    public void updateProfile(User user) throws Exception {
+        // Pas besoin de vérification admin pour son propre profil
+        dao.update(user);
+
+        // Mettre à jour la session
+        Session.login(user);
+    }
+
     @Override
     public void delete(int id) throws Exception {
         checkAdmin();

@@ -1,7 +1,6 @@
 package org.example.dao;
 
 import org.example.config.DB;
-import org.example.model.Event;
 import org.example.model.User;
 
 import java.sql.*;
@@ -238,7 +237,7 @@ public class ParticipationDAO {
         }
         return participants;
     }
-    public Date getDateInscription(int participantId, int eventId) throws SQLException {
+    public Timestamp getDateInscription(int participantId, int eventId) throws SQLException {
         String sql = "SELECT date_inscription FROM participations WHERE id_participant = ? AND id_evenement = ?";
 
         try (Connection conn = DB.getConnection();

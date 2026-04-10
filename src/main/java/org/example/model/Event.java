@@ -71,9 +71,17 @@ public class Event {
     public void setPlacesDispo(int placesDispo) { this.placesDispo = placesDispo; }
 
     public String getStatut() {
-        if (estComplet()) return "COMPLET";
-        if (new Date().after(dateFin)) return "TERMINÉ";
-        if (new Date().before(dateDebut)) return "À VENIR";
+        Date now = new Date();
+
+        if (now.after(dateFin)) {
+            return "TERMINÉ";
+        }
+        if (now.before(dateDebut)) {
+            return "À VENIR";
+        }
+        if (placesDispo <= 0) {
+            return "COMPLET";
+        }
         return "EN COURS";
     }
 

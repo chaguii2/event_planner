@@ -3,7 +3,10 @@ package org.example.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -15,6 +18,7 @@ import org.example.util.AlertUtil;
 
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ParticipantEventController implements Initializable {
@@ -91,10 +95,49 @@ public class ParticipantEventController implements Initializable {
     @FXML
     private void loadAvailableEvents() {
         try {
-            availableEventsList.setAll(eventService.getAvailableEvents());
+            List<Event> events = eventService.getAvailableEvents();
+
+            // 🔍 DEBUG - Afficher dans la console
+            System.out.println("=== Chargement des événements disponibles ===");
+            System.out.println("Nombre trouvé: " + events.size());
+            for (Event e : events) {
+                System.out.println("ID: " + e.getId() +
+                        ", Titre: " + e.getTitre() +
+                        ", Places: " + e.getPlacesDispo() +
+                        ", Date fin: " + e.getDateFin());
+            }
+
+            availableEventsList.setAll(events);
             availableEventsTable.setItems(availableEventsList);
+
+            if (events.isEmpty()) {
+                availableEventsTable.setPlaceholder(new Label("Aucun événement disponible pour le moment"));
+            }
+
         } catch (Exception e) {
+            e.printStackTrace(); // ← Voir l'erreur complète
             AlertUtil.showError("Erreur", "Impossible de charger les événements: " + e.getMessage());
+        }
+    }
+    @FXML
+    private void handleProfile() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ProfileView.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Mon Profil");
+            stage.setScene(new Scene(root, 500, 450));
+            stage.setResizable(false);
+            stage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+            stage.initOwner(welcomeLabel.getScene().getWindow());
+            stage.showAndWait();
+
+            // Rafraîchir le nom après modification
+            welcomeLabel.setText("Bienvenue, " + Session.getCurrentUser().getName());
+
+        } catch (Exception e) {
+            AlertUtil.showError("Erreur", "Impossible d'ouvrir le profil: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

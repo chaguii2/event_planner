@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.security.PasswordUtil;
 import org.example.session.Session;
 
 public class App extends Application {
@@ -57,5 +58,12 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        String password = "123456";
+        String hash = PasswordUtil.hash(password);
+
+        System.out.println("Hash généré: " + hash);
+        System.out.println("\n--- SQL pour créer l'admin ---");
+        System.out.println("INSERT INTO users (name, email, password, phone, role, created_at)");
+        System.out.println("VALUES ('Admin', 'admin@eventplanner.com', '" + hash + "', '1234567890', 'ADMIN', NOW());");
     }
 }
